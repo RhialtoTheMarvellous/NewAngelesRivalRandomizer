@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">New Angeles Rival Randomizer</string>
+
+    <!--Corp names-->
+    <string name="corp_globalsec">Globalsec</string>
+    <string name="corp_haasbioroid">Haas-Bioroid</string>
+    <string name="corp_jinteki">Jinteki</string>
+    <string name="corp_melange">Melange Mining</string>
+    <string name="corp_nbn">NBN</string>
+    <string name="corp_weyland">Weyland Consortium</string>
+
+    <string name="federalist">Federalist</string>
+    <string name="unused">Unused card</string>
+    <string name="text_select">Select corporations in play</string>
+    <string name="button_submit">Submit</string>
+    <string name="text_four_corps_warning">Please select at least four corporations</string>
+    <string name="button_ok">OK</string>
+
+</resources>
