@@ -15,5 +15,7 @@
     <string name="button_submit">Submit</string>
     <string name="text_four_corps_warning">Please select at least four corporations</string>
     <string name="button_ok">OK</string>
+    <string name="button_new_game">New Game</string>
+    <string name="button_continue_saved">Continue Saved Game</string>
 
 </resources>

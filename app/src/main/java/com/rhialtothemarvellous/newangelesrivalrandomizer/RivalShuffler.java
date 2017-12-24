@@ -2,15 +2,14 @@ package com.rhialtothemarvellous.newangelesrivalrandomizer;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class RivalShuffler {
-    public Map<CorpOrUnused, CorpOrFederalist> shuffle(List<Corp> selectedCorps) {
+    public HashMap<CorpOrUnused, CorpOrFederalist> shuffle(List<Corp> selectedCorps) {
         int numCards = selectedCorps.size() + 1;
         
         // Prepare the return value
-        Map<CorpOrUnused, CorpOrFederalist> result = new HashMap<>(numCards);
+        HashMap<CorpOrUnused, CorpOrFederalist> result = new HashMap<>(numCards);
         
         // Get LSH and RHS arrays
         CorpOrUnused[] players = selectedCorps.toArray(new CorpOrUnused[numCards]);

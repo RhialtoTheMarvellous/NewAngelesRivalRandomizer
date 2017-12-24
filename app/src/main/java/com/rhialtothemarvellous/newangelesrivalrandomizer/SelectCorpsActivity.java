@@ -9,14 +9,14 @@ import android.widget.CheckBox;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
-    public static final String EXTRA_CORP_LIST
-            = "com.rhialtothemarvellous.newangelesrivalrandomizer.CORP_LIST";
+public class SelectCorpsActivity extends AppCompatActivity {
+    public static final String GAME
+            = "com.rhialtothemarvellous.newangelesrivalrandomizer.GAME";
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_select_corps);
     }
     
     public void submitList(View view) {
@@ -49,11 +49,14 @@ public class MainActivity extends AppCompatActivity {
             fourCorpsWarning.show(getFragmentManager(), "four corps warning");
             return;
         }
+
+        Game game = new Game(list);
+        
+        // TODO: Save game to file
     
-        Intent intent = new Intent(this, DisplayRivalsActivity.class);
+        Intent intent = new Intent(this, DisplayAllRivalsActivity.class);
     
-        // TODO: This works because enums are Serliazable, but apparently Parcelable classes give better performance
-        intent.putExtra(EXTRA_CORP_LIST, list);
+        intent.putExtra(GAME, game);
     
         startActivity(intent);
     }
