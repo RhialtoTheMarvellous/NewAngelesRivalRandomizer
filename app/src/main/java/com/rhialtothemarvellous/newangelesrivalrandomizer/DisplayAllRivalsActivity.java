@@ -1,38 +1,44 @@
 package com.rhialtothemarvellous.newangelesrivalrandomizer;
 
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
 
-import java.util.List;
-
-public class DisplayAllRivalsActivity extends AppCompatActivity {
+public class DisplayAllRivalsActivity
+        extends AppCompatActivity
+        implements DisplayAllRivalsInitialFragment.OnFragmentInteractionListener {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_all_rivals);
-    
-        Intent intent = getIntent();
-        Game game = (Game) intent.getSerializableExtra(SelectCorpsActivity.GAME);
-    
-        List<Corp> players = game.getPlayers();
-    
-        StringBuilder builder = new StringBuilder();
-
-        for (Corp player: players) {
-            builder.append(getString(player.getStringID()))
-                    .append(" : ")
-                    .append(getString(game.getRival(player).getStringID()))
-                    .append("\n");
+        
+        // If we're being restored from a previous state, we should nothing
+        if (savedInstanceState != null) {
+            return;
         }
-        builder.append(getString(Unused.UNUSED.getStringID()))
-                .append(" : ")
-                .append(getString(game.getUnusedCard().getStringID()));
         
-        TextView textView = findViewById(R.id.textView_List);
+        // Create a new Fragment to be placed in the Activity's layout
+        DisplayAllRivalsInitialFragment initialFragment = new DisplayAllRivalsInitialFragment();
         
-        textView.setText(builder.toString());
+        // Add the fragment to the layout
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.display_all_rivals_fragment_container, initialFragment).commit();
+    }
+    
+    @Override
+    public void onFragmentButtonPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    
+        builder.setMessage("Hail Eris!")
+                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    
+                    }
+                });
+    
+        builder.show();
     }
 }

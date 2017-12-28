@@ -13,9 +13,12 @@
     <string name="unused">Unused card</string>
     <string name="text_select">Select corporations in play</string>
     <string name="button_submit">Submit</string>
-    <string name="text_four_corps_warning">Please select at least four corporations</string>
+    <string name="text_four_corps_warning">Please select at least four corporations.</string>
     <string name="button_ok">OK</string>
     <string name="button_new_game">New Game</string>
     <string name="button_continue_saved">Continue Saved Game</string>
+
+    <string name="text_display_all_rivals_initial">Ready to display rivals. Click the button below to begin.</string>
+    <string name="button_start">Start</string>
 
 </resources>
