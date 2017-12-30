@@ -23,5 +23,7 @@
 
     <string name="text_reveal_rival_instruction">Press the button below to reveal your rival card.</string>
     <string name="button_reveal_rival">Reveal</string>
+    <string name="text_rival_finished_instruction">Press the button below when finished.</string>
+    <string name="button_done">Done</string>
 
 </resources>

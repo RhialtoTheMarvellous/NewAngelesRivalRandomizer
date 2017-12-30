@@ -2,7 +2,7 @@ package com.rhialtothemarvellous.newangelesrivalrandomizer;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.net.Uri;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -33,15 +33,6 @@ public class DisplayRivalFragment extends Fragment implements View.OnClickListen
         // Required empty public constructor
     }
     
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DisplayRivalFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static DisplayRivalFragment newInstance(Corp param1, CorpOrFederalist param2) {
         DisplayRivalFragment fragment = new DisplayRivalFragment();
         Bundle args = new Bundle();
@@ -72,14 +63,10 @@ public class DisplayRivalFragment extends Fragment implements View.OnClickListen
         Button revealButton = view.findViewById(R.id.button_RevealRival);
         revealButton.setOnClickListener(this);
         
+        Button finishedButton = view.findViewById(R.id.button_RivalFinished);
+        finishedButton.setOnClickListener(this);
+        
         return view;
-    }
-    
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
     
     @Override
@@ -105,15 +92,27 @@ public class DisplayRivalFragment extends Fragment implements View.OnClickListen
             case R.id.button_RevealRival:
                 revealRival();
                 break;
+            case R.id.button_RivalFinished:
+                mListener.onFinishedDisplayRival();
+                break;
         }
     }
     
     private void revealRival() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        
-        builder.setMessage("Your rival is " + getString(mRival.getStringID()) + ".");
-        
-        builder.show();
+    
+        final View rivalFinishedInstruction = getActivity().findViewById(R.id.textView_RivalFinishedInstruction);
+        final View rivalFinishedButton = getActivity().findViewById(R.id.button_RivalFinished);
+    
+        builder.setMessage("Your rival is " + getString(mRival.getStringID()) + ".")
+                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        rivalFinishedInstruction.setVisibility(View.VISIBLE);
+                        rivalFinishedButton.setVisibility(View.VISIBLE);
+                    }
+                })
+                .show();
     }
     
     /**
@@ -127,7 +126,6 @@ public class DisplayRivalFragment extends Fragment implements View.OnClickListen
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFinishedDisplayRival();
     }
 }
