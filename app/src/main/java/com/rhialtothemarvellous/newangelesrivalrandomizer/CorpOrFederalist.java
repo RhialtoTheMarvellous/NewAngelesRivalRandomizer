@@ -1,5 +1,7 @@
 package com.rhialtothemarvellous.newangelesrivalrandomizer;
 
-public interface CorpOrFederalist {
+import java.io.Serializable;
+
+public interface CorpOrFederalist extends Serializable {
     int getStringID();
 }

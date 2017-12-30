@@ -21,4 +21,7 @@
     <string name="text_display_all_rivals_initial">Ready to display rivals. Click the button below to begin.</string>
     <string name="button_start">Start</string>
 
+    <string name="text_reveal_rival_instruction">Press the button below to reveal your rival card.</string>
+    <string name="button_reveal_rival">Reveal</string>
+
 </resources>

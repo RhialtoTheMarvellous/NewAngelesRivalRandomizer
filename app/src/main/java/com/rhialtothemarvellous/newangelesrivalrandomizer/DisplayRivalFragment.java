@@ -1,35 +1,35 @@
 package com.rhialtothemarvellous.newangelesrivalrandomizer;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DisplayAllRivalsInitialFragment.OnFragmentInteractionListener} interface
+ * {@link DisplayRivalFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link DisplayAllRivalsInitialFragment#newInstance} factory method to
+ * Use the {@link DisplayRivalFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DisplayAllRivalsInitialFragment extends Fragment implements View.OnClickListener {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class DisplayRivalFragment extends Fragment implements View.OnClickListener {
+    private static final String ARG_PLAYER = "player";
+    private static final String ARG_RIVAL = "rival";
     
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Corp mPlayer;
+    private CorpOrFederalist mRival;
     
     private OnFragmentInteractionListener mListener;
     
-    public DisplayAllRivalsInitialFragment() {
+    public DisplayRivalFragment() {
         // Required empty public constructor
     }
     
@@ -39,14 +39,14 @@ public class DisplayAllRivalsInitialFragment extends Fragment implements View.On
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DisplayAllRivalsInitialFragment.
+     * @return A new instance of fragment DisplayRivalFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DisplayAllRivalsInitialFragment newInstance(String param1, String param2) {
-        DisplayAllRivalsInitialFragment fragment = new DisplayAllRivalsInitialFragment();
+    public static DisplayRivalFragment newInstance(Corp param1, CorpOrFederalist param2) {
+        DisplayRivalFragment fragment = new DisplayRivalFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putSerializable(ARG_PLAYER, param1);
+        args.putSerializable(ARG_RIVAL, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,8 +55,8 @@ public class DisplayAllRivalsInitialFragment extends Fragment implements View.On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mPlayer = (Corp) getArguments().getSerializable(ARG_PLAYER);
+            mRival = (CorpOrFederalist) getArguments().getSerializable(ARG_RIVAL);
         }
     }
     
@@ -64,12 +64,22 @@ public class DisplayAllRivalsInitialFragment extends Fragment implements View.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_display_all_rivals_initial, container, false);
+        View view = inflater.inflate(R.layout.fragment_display_rival, container, false);
     
-        Button startButton = view.findViewById(R.id.button_StartDisplay);
-        startButton.setOnClickListener(this);
+        TextView corpName = view.findViewById(R.id.textView_CorpName);
+        corpName.setText(mPlayer.getStringID());
+    
+        Button revealButton = view.findViewById(R.id.button_RevealRival);
+        revealButton.setOnClickListener(this);
         
         return view;
+    }
+    
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
     }
     
     @Override
@@ -91,13 +101,19 @@ public class DisplayAllRivalsInitialFragment extends Fragment implements View.On
     
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_StartDisplay:
-                if (mListener != null) {
-                    mListener.onDisplayAllRivalsInitialFragmentButtonPressed();
-                }
+        switch(view.getId()) {
+            case R.id.button_RevealRival:
+                revealRival();
                 break;
         }
+    }
+    
+    private void revealRival() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        
+        builder.setMessage("Your rival is " + getString(mRival.getStringID()) + ".");
+        
+        builder.show();
     }
     
     /**
@@ -111,6 +127,7 @@ public class DisplayAllRivalsInitialFragment extends Fragment implements View.On
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void onDisplayAllRivalsInitialFragmentButtonPressed();
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 }

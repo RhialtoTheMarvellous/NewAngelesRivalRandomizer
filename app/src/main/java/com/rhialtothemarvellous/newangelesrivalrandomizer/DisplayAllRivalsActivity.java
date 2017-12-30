@@ -2,12 +2,18 @@ package com.rhialtothemarvellous.newangelesrivalrandomizer;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class DisplayAllRivalsActivity
         extends AppCompatActivity
-        implements DisplayAllRivalsInitialFragment.OnFragmentInteractionListener {
+        implements DisplayAllRivalsInitialFragment.OnFragmentInteractionListener,
+                    DisplayRivalFragment.OnFragmentInteractionListener {
+    
+    private Game mGame;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +24,9 @@ public class DisplayAllRivalsActivity
         if (savedInstanceState != null) {
             return;
         }
+    
+        Intent intent = getIntent();
+        mGame = (Game) intent.getSerializableExtra(SelectCorpsActivity.GAME);
         
         // Create a new Fragment to be placed in the Activity's layout
         DisplayAllRivalsInitialFragment initialFragment = new DisplayAllRivalsInitialFragment();
@@ -28,17 +37,21 @@ public class DisplayAllRivalsActivity
     }
     
     @Override
-    public void onFragmentButtonPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    public void onDisplayAllRivalsInitialFragmentButtonPressed() {
+        Corp player = mGame.getPlayers().get(0);
+        CorpOrFederalist rival = mGame.getRival(player);
+        DisplayRivalFragment rivalFragment = DisplayRivalFragment.newInstance(player, rival);
     
-        builder.setMessage("Hail Eris!")
-                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    
-                    }
-                });
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        
+        transaction.replace(R.id.display_all_rivals_fragment_container, rivalFragment);
+        transaction.addToBackStack(null);
+        
+        transaction.commit();
+    }
     
-        builder.show();
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+    
     }
 }
