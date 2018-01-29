@@ -5,6 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.transition.AutoTransition;
+import android.transition.Fade;
+import android.transition.Scene;
+import android.transition.Transition;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,20 +104,37 @@ public class DisplayRivalFragment extends Fragment implements View.OnClickListen
     }
     
     private void revealRival() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-    
-        final View rivalFinishedInstruction = getActivity().findViewById(R.id.textView_RivalFinishedInstruction);
-        final View rivalFinishedButton = getActivity().findViewById(R.id.button_RivalFinished);
-    
-        builder.setMessage("Your rival is " + getString(mRival.getStringID()) + ".")
-                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        rivalFinishedInstruction.setVisibility(View.VISIBLE);
-                        rivalFinishedButton.setVisibility(View.VISIBLE);
-                    }
-                })
-                .show();
+//        final View revealRivalInstruction = getActivity().findViewById(R.id.textView_RevealRivalInstruction);
+//        final View revealRivalButton = getActivity().findViewById(R.id.button_RevealRival);
+//        final View rivalTextView = getActivity().findViewById(R.id.textView_Rival);
+//        final View rivalFinishedInstruction = getActivity().findViewById(R.id.textView_RivalFinishedInstruction);
+//        final View rivalFinishedButton = getActivity().findViewById(R.id.button_RivalFinished);
+//
+//        TransitionManager.beginDelayedTransition((ViewGroup) getActivity().findViewById(R.id.layout_DisplayRivalFragment));
+//
+//        revealRivalInstruction.setVisibility(View.INVISIBLE);
+//        revealRivalButton.setVisibility(View.INVISIBLE);
+//        ((TextView) rivalTextView).setText(getString(R.string.text_your_rival_is, getString(mRival.getStringID())));
+//        rivalTextView.setVisibility(View.VISIBLE);
+//        rivalFinishedInstruction.setVisibility(View.VISIBLE);
+//        rivalFinishedButton.setVisibility(View.VISIBLE);
+
+        ViewGroup sceneRoot = (ViewGroup) getActivity().findViewById(R.id.rival_scene_root);
+
+        Scene displayRivalScene = Scene.getSceneForLayout(sceneRoot, R.layout.scene_rival_display, getActivity());
+
+        displayRivalScene.setEnterAction(new Runnable() {
+            @Override
+            public void run() {
+                View rivalTextView = getActivity().findViewById(R.id.textView_Rival);
+                ((TextView) rivalTextView).setText(getString(R.string.text_your_rival_is, getString(mRival.getStringID())));
+            }
+        });
+
+        Transition transition = new AutoTransition();
+
+        TransitionManager.go(displayRivalScene, transition);
+
     }
     
     /**
